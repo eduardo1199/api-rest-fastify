@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx --watch src/server.ts",
-    "lint": "eslint src --ext .ts --fix"
+    "dev": "tsx --trace-warnings --watch src/server.ts",
+    "lint": "eslint src --ext .ts --fix",
+    "knex": "node --trace-warnings  --loader tsx ./node_modules/knex/bin/cli.js"
   },
   "keywords": [],
   "author": "",
