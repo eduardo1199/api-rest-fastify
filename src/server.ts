@@ -3,10 +3,13 @@ import cookie from '@fastify/cookie'
 
 import { env } from './env'
 import { transactionsRoutes } from './routes/transactions'
+import { Log } from './hooks/log-hook'
 
 const app = fastify({
   logger: true,
 })
+
+app.addHook('preHandler', Log)
 
 app.register(cookie)
 
