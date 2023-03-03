@@ -1,21 +1,5 @@
-import fastify from 'fastify'
-import cookie from '@fastify/cookie'
-
+import { app } from './app'
 import { env } from './env'
-import { transactionsRoutes } from './routes/transactions'
-import { Log } from './hooks/log-hook'
-
-const app = fastify({
-  logger: true,
-})
-
-app.addHook('preHandler', Log)
-
-app.register(cookie)
-
-app.register(transactionsRoutes, {
-  prefix: 'transactions',
-})
 
 /* process.on('uncaughtException', (error) => {
   console.log(error.message)
