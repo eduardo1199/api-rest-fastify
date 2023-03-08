@@ -1,20 +1,19 @@
 import { app } from './app'
 import { env } from './env'
 
-/* process.on('uncaughtException', (error) => {
-  console.log(error.message)
-  process.exit(1)
-}) */
+/* app.setErrorHandler(function (error, request, reply) {
+  if (error instanceof z.ZodError) {
+    const errorMessage = error.issues.map((issue) => {
+      return {
+        message: `${issue.path[0]}: ${issue.message}`,
+      }
+    })
 
-/* fastify.setErrorHandler(function (error, request, reply) {
-  if (error instanceof Fastify.errorCodes.FST_ERR_BAD_STATUS_CODE) {
-    // Log error
-    this.log.error(error)
-    // Send error response
-    reply.status(500).send({ ok: false })
+    return reply
+      .status(StatusCodeErrors.BAD_REQUEST)
+      .send(JSON.stringify(errorMessage))
   } else {
-    // fastify will use parent error handler to handle this
-    reply.send(error)
+    return reply.status(StatusCodeErrors.INTERNAL_SERVER_ERROR).send(error)
   }
 }) */
 
@@ -23,9 +22,7 @@ app.listen(
     port: env.PORT,
   },
   (error) => {
-    if (error) {
-      app.log.error(error.message)
-    } else {
+    if (!error) {
       console.log('server is listening on port 3333')
     }
   },
